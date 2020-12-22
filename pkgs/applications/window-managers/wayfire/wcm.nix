@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "WayfireWM";
     repo = "wcm";
     rev = "v${version}";
-    sha256 = "1b22gymqfn0c49nf39676q5bj25rxab874iayiq31cmn14r30dyg";
+    sha256 = "0xdjrmpdwag2d7bhqa2iall0rdsqpzfgix279lp2zy1ldw9gzg1n";
   };
 
   nativeBuildInputs = [ meson ninja pkg-config wayland wrapGAppsHook ];
