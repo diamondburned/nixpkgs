@@ -20,6 +20,11 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [ "--sysconfdir" "/etc" ];
 
+  postInstall = ''
+    mkdir -p "$out/share/applications/"
+    cp -f "${src}/wayfire.desktop" "$out/share/applications/"
+  '';
+
   meta = with lib; {
     homepage = "https://wayfire.org/";
     description = "3D wayland compositor";
