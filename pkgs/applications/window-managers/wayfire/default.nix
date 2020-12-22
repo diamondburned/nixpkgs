@@ -1,15 +1,20 @@
-{ stdenv, lib, fetchurl, meson, ninja, pkg-config, git
+{ stdenv, lib, fetchFromGitHub, meson, ninja, pkg-config, git
 , cairo, libdrm, libexecinfo, libinput, libjpeg, libxkbcommon, wayland
-, wayland-protocols, wf-config, wlroots
+, wayland-protocols, wf-config, wlroots,
+
+findutils, # TODO REMOVE
 }:
 
 stdenv.mkDerivation rec {
   pname = "wayfire";
   version = "0.6.0";
 
-  src = fetchurl {
-    url = "https://github.com/WayfireWM/wayfire/releases/download/${version}/wayfire-${version}.tar.xz";
-    sha256 = "0wc5szslgf8d4r4dlbfgc5v49j2ziaa8fycmknq4p0vl67mh7acq";
+  src = fetchFromGitHub {
+    owner = "WayfireWM";
+    repo = "wayfire";
+    rev = version;
+    sha256 = "1glrfzz0dk1xgljk71vl138zpsdc765w29ik9x5dqcnwjj2sq4px";
+    fetchSubmodules = true;
   };
 
   nativeBuildInputs = [ meson ninja pkg-config wayland ];
@@ -21,8 +26,8 @@ stdenv.mkDerivation rec {
   mesonFlags = [ "--sysconfdir" "/etc" ];
 
   postInstall = ''
-    mkdir -p "$out/share/applications/"
-    cp -f "${src}/wayfire.desktop" "$out/share/applications/"
+	mkdir -p "$out/share/wayland-sessions/"
+    cp -f "$src/wayfire.desktop" "$out/share/wayland-sessions/"
   '';
 
   meta = with lib; {

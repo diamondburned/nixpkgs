@@ -22,6 +22,7 @@ runCommandNoCC "${application.name}-wrapped" {
 
   passthru = application.passthru // {
     unwrapped = application;
+    providedSessions = [ "wayfire" ];
   };
 
   inherit (application) meta;
@@ -36,7 +37,4 @@ runCommandNoCC "${application.name}-wrapped" {
   done
   find ${application} -mindepth 1 -maxdepth 1 -not -name bin \
       -exec ln -s '{}' $out ';'
-
-  mkdir -p $out/share/
-  cp -rf ${application}/share/applications $out/share/
 ''
